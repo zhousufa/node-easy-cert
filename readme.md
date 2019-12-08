@@ -1,4 +1,4 @@
-## node-easy-cert
+## node-easy-cert-fork
 
 [![npm download][download-image]][download-url]
 
