@@ -1,5 +1,5 @@
 {
-  "name": "node-easy-cert",
+  "name": "node-easy-cert-fork",
   "version": "1.3.1",
   "description": "A tool for managing self-signed certifications",
   "main": "dist/index.js",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ottomao/node-easy-cert"
+    "url": "https://github.com/zhousufa/node-easy-cert"
   },
   "keywords": [
     "certification",

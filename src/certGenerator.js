@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const forge = require('node-forge');
 const Util = require('./util');
@@ -11,9 +11,9 @@ let defaultAttrs = [
 ];
 
 /**
-* different domain format needs different SAN
-*
-*/
+ * different domain format needs different SAN
+ *
+ */
 function getExtensionSAN(domain = '') {
   const isIpDomain = Util.isIpDomain(domain);
   if (isIpDomain) {
@@ -30,12 +30,14 @@ function getExtensionSAN(domain = '') {
 }
 
 function getKeysAndCert(serialNumber) {
-  const keys = forge.pki.rsa.generateKeyPair(1024);
+  const keys = forge.pki.rsa.generateKeyPair(2048);
   const cert = forge.pki.createCertificate();
   cert.publicKey = keys.publicKey;
-  cert.serialNumber = serialNumber || (Math.floor(Math.random() * 100000) + '');
+  cert.serialNumber = serialNumber || Math.floor(Math.random() * 100000) + '';
   cert.validity.notBefore = new Date();
-  cert.validity.notBefore.setFullYear(cert.validity.notBefore.getFullYear() - 10); // 10 years
+  cert.validity.notBefore.setFullYear(
+    cert.validity.notBefore.getFullYear() - 10
+  ); // 10 years
   cert.validity.notAfter = new Date();
   cert.validity.notAfter.setFullYear(cert.validity.notAfter.getFullYear() + 10); // 10 years
   return {
@@ -60,11 +62,11 @@ function generateRootCA(commonName) {
   cert.setSubject(attrs);
   cert.setIssuer(attrs);
   cert.setExtensions([
-    { name: 'basicConstraints', cA: true },
-  // { name: 'keyUsage', keyCertSign: true, digitalSignature: true, nonRepudiation: true, keyEncipherment: true, dataEncipherment: true },
-  // { name: 'extKeyUsage', serverAuth: true, clientAuth: true, codeSigning: true, emailProtection: true, timeStamping: true },
-  // { name: 'nsCertType', client: true, server: true, email: true, objsign: true, sslCA: true, emailCA: true, objCA: true },
-  // { name: 'subjectKeyIdentifier' }
+    { name: 'basicConstraints', cA: true }
+    // { name: 'keyUsage', keyCertSign: true, digitalSignature: true, nonRepudiation: true, keyEncipherment: true, dataEncipherment: true },
+    // { name: 'extKeyUsage', serverAuth: true, clientAuth: true, codeSigning: true, emailProtection: true, timeStamping: true },
+    // { name: 'nsCertType', client: true, server: true, email: true, objsign: true, sslCA: true, emailCA: true, objCA: true },
+    // { name: 'subjectKeyIdentifier' }
   ]);
 
   cert.sign(keys.privateKey, forge.md.sha256.create());
